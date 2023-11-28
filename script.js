@@ -43,14 +43,14 @@ if (signin_section) {
 const personal_icon = document.getElementById('personal_icon'); 
 if (personal_icon) {
     personal_icon.addEventListener('click', function() {
-        window.location.href = 'userSection.php';
+        window.location.href = 'user.php';
     })
 }
 // switch into addProductSection.php page
 const add_product = document.getElementById('add_product');
 if(add_product) {
     add_product.addEventListener('click',  function () {
-        window.location.href = 'addProductSection.php';
+        window.location.href = 'add_annonce.php';
     });
 }
 // addProductSection.php logic
@@ -59,7 +59,7 @@ if (add_product_form) {
     add_product_form.addEventListener('submit', function(event) {
         event.preventDefault(); 
         const formData = new FormData(add_product_form);
-        fetch('insertProduct.php', {
+        fetch('insert.php', {
             method: 'POST',
             body: formData
         })
@@ -79,7 +79,7 @@ if (userSection_exit) {
 const add_product_exit = document.getElementById('add_product_exit'); 
 if (add_product_exit) {
     add_product_exit.addEventListener('click', function() {
-        window.location.href = 'userSection.php';
+        window.location.href = 'user.php';
     })
 }
 // edit buttons handling 
@@ -94,7 +94,7 @@ if (edit_button) {
         // Save product_id in localStorage
         localStorage.setItem('product_id', otherClassNames[1]);
 
-        window.location.href = 'editProductSection.php';
+        window.location.href = 'edit_annonce.php';
     })
 }
 const edit_product_form = document.getElementById('edit_product_form'); 
@@ -105,19 +105,19 @@ if (edit_product_form) {
     
         // Retrieve product_id from localStorage
         formData.append('product_id', Number(localStorage.getItem('product_id')));
-        fetch('updateProduct.php', {
+        fetch('update.php', {
             method: 'POST',
             body: formData
         })
         alert('product Updated Successfully');
     })
 }
-const edit_product_exit = document.getElementById('edit_product_exit'); 
-if (edit_product_exit) {
-    edit_product_exit.addEventListener('click', function() {
-        window.location.href = 'userSection.php';
-    })
-}
+// const edit_product_exit = document.getElementById('edit_product_exit'); 
+// if (edit_product_exit) {
+//     edit_product_exit.addEventListener('click', function() {
+//         window.location.href = 'user.php';
+//     })
+// }
 
 // Delete buttons handling
 const delete_button = document.querySelectorAll('.delete_button'); 
@@ -127,7 +127,7 @@ for(const button of delete_button) {
         const otherClassNames = Array.from(closestEelement.classList);
         const formData = new FormData();
         formData.append('product_id', Number(otherClassNames[1]));
-        fetch('deleteProduct.php', {
+        fetch('delete_annonce.php', {
             method: 'POST',
             body: formData
         })
@@ -144,83 +144,49 @@ const admin_icon = document.getElementById('admin_icon');
 if (admin_icon) {
     // console.log(admin_icon);
     admin_icon.addEventListener('click', function() {
-        window.location.href = 'adminSection.php';
+        window.location.href = 'admin.php';
+    })
+}
+const admin_panel = document.getElementById('admin_panel'); 
+if(admin_panel) {
+    admin_panel.addEventListener('click', function() {
+        window.location.href = 'admin.php';
     })
 }
 
-/*
-// userSection.php for admin Handling 
-const user_id = document.querySelectorAll('.user_id'); 
-if(user_id) {
-    for(const user of user_id){
-        user.addEventListener('click', function(event){
-            const closestEelement = event.target.closest('.user_id');
-            const otherClassNames = Array.from(closestEelement.classList);
-            // Save product_id in localStorage
-            localStorage.setItem('user_id', otherClassNames[1]);
-            window.location.href = 'userSection.php';
+// 
+const delete_users = document.querySelectorAll('.delete_user');
+delete_users.forEach(delete_user => {
+    delete_user.addEventListener('click', function(event) {
+        event.preventDefault();
+        // Assuming you want to get some data from the clicked element
+        const userId = delete_user.getAttribute('user_id');
+        console.log(userId);
+        const adminForm = document.getElementById('adminForm');
+        const formData = new FormData(adminForm);
+
+        // Append data to the form
+        formData.append('user_id', userId);
+
+        fetch('deleteUser.php', {
+            method: 'POST',
+            body: formData
         })
-    }
-}
-
-// userSection.php for admin Handling
-const user_section = document.getElementById('user_section'); 
-if (user_section) {
-    const formData = new FormData();
-    // Retrieve product_id from localStorage
-    formData.append('user_id', Number(localStorage.getItem('user_id')));
-    fetch('userSection.php', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.text())
-    .then(data => {
-        console.log(data); 
-        function extractTextBetweenPreTags(text) {
-            const regex = /<pre>([\s\S]*?)<\/pre>/;
-            const match = text.match(regex);
-        
-            if (match && match[1]) {
-                return match[1].trim();
-            } else {
-                return null;
-            }
-        }
-        const test = document.getElementById('test'); 
-        test.innerHTML = extractTextBetweenPreTags(data);
-    })
-    .catch(error => {
-        console.error('Error:', error);
+        .then(response => response.text())
+        .then(data => {
+            console.log(data);
+            // You can perform additional actions here based on the response
+        })
+        .then(() => window.location.reload())
+        .catch(error => {
+            console.error('Error:', error);
+        });
     });
-    console.log(user_section);
-}
-*/
-const user_id = document.querySelectorAll('.user_id');  
-if (user_id) {
-    for (const button of user_id)
-    button.addEventListener('click', function(event) {
-        const closestEelement = event.target.closest('.user_id');
-        const otherClassNames = Array.from(closestEelement.classList);
-        console.log(otherClassNames[1]);
+});
 
-        // Save product_id in localStorage
-        localStorage.setItem('user_id', otherClassNames[1]);
 
-        window.location.href = 'userSection.php';
-    })
-}
-// const user_section = document.getElementById('user_section'); 
-// if (user_section) {
-//     edit_product_form.addEventListener('submit', function(event) {
-//         event.preventDefault();
-//         const formData = new FormData(edit_product_form);
-    
-//         // Retrieve product_id from localStorage
-//         formData.append('product_id', Number(localStorage.getItem('product_id')));
-//         fetch('updateProduct.php', {
-//             method: 'POST',
-//             body: formData
-//         })
-//         alert('product Updated Successfully');
-//     })
-// }
+// const closestEelement = event.target.closest('.user');
+// const otherClassNames = Array.from(closestEelement.classList);
+// console.log(otherClassNames[0]);
+// Retrieve product_id from localStorage
+// formData.append('product_id', Number(localStorage.getItem('product_id')));

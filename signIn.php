@@ -21,7 +21,7 @@
     $checker = 0;
     $isAdmin = 0;
     // let's check if the in_email and in_password are for the admin
-    if($_SESSION['SIGNIN_POST']['in_email'] == 'admin@gmail.com' && $_SESSION['SIGNIN_POST']['in_password'] == 'admin') {
+    if($_SESSION['SIGNIN_POST']['in_email'] == 'khawlakha@gmail.com' && $_SESSION['SIGNIN_POST']['in_password'] == 'khawla') {
         $isAdmin = 1;
         $checker = 1;
     }
@@ -46,7 +46,7 @@
                         <?php
                             if($isAdmin == 1) {
                                 echo '  
-                                    <div id="admin_icon" class="flex items-center gap-1 cursor-pointer">
+                                    <div id="admin_icon" class="flex items-center gap-1 cursor-pointer italic font-serif">
                                         <div>Admin</div>
                                         <ion-icon name="clipboard" class="text-3xl"></ion-icon>
                                     </div>';
